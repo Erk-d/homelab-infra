@@ -4,8 +4,8 @@ services:
     container_name: adguardhome
     network_mode: host
     volumes:
-      - "./adguard_work:/opt/adguardhome/work"
-      - "./adguard_conf:/opt/adguardhome/conf"
+      - ./adguard_work:/opt/adguardhome/work
+      - ./adguard_conf:/opt/adguardhome/conf
     restart: unless-stopped
 
   homeassistant:
@@ -24,3 +24,38 @@ services:
     restart: unless-stopped
     ports:
       - "9443:9443"
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./portainer_data:/data"
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - "./uptime_kuma_data:/data"
+
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    volumes:
+      - ./vaultwarden_data:/data
+    ports:
+      - "8080:80"
+
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - TZ=America/Los_Angeles
+      - claim-6sA7LYGNJ6TKBEr87N1x
+    volumes:
+      - ./plex/config:/config
+      - ~/media/tvshows:/data/tvshows
+      - ~/media/movies:/data/movies
+    restart: unless-stopped
