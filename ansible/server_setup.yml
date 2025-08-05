@@ -1,0 +1,28 @@
+---
+- name: Configure Homelaab Server
+  hosts: homelab_servers
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600 # Update only if cache is older than 1 hour
+
+    - name: Install essential packages
+      ansible.builtin.apt:
+        name:
+          - git
+          - htop
+          - mc
+        state: present
+    
+    - name: Ensure media directorie exist
+      ansible.builtin.file:
+        path: "/home/floki/media/{{ item }}"
+        state: directory
+        owner: floki
+        group: floki
+        mode: '0755'
+      loop:
+        - movies
+        - tvshows
