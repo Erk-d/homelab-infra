@@ -1,2 +1,49 @@
 *.log
 *.env
+
+
+#Ignore any files specifically named for their secrets
+secrets.yml
+secrets.yaml
+*.token
+*.key
+
+
+#SSH Private keys
+id_rsa
+id_ed25519
+
+
+# Application Data 
+# Ignore live data folders for Docker containers.
+# IE Plex library
+
+adguard_conf/
+adguard_work/
+homeassitant_config/ 
+plex/
+portainer_data/
+uptime_kuma_data/
+vaultwarden_data/
+syncthing/
+npm/
+# Add any other data folders here in the future
+
+
+# ## System & IDE Files ##
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Visual Studio Code settings directory
+.vscode/
+
+# Ignore Python cache files
+__pycache__/
+
+
+# ## Ansible Files ##
+# Ignore temporary files created by Ansible runs
+*.retry
+
+# Ignore Ansible Vault password files
+vault.pass
