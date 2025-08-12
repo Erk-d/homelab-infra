@@ -1,0 +1,6 @@
+---
+- name: Deploy Core Homelab Services
+  hosts: homelab_servers
+  become: yes
+  roles:
+    - nginx_proxy_manager
