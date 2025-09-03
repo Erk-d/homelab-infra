@@ -4,3 +4,6 @@
   become: yes
   roles:
     - nginx_proxy_manager
+    - syncthing
+    - portainer
+    - vaultwarden
