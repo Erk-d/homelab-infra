@@ -1,4 +1,0 @@
----
-- name: Create NPM directories
-  ansible.builtin.file:
-    path
