@@ -1,0 +1,14 @@
+- name: Ensure Homepage config directory exists
+  ansible.builtin.file:
+    path: "/home/floki/docker/docker/docker-compose.yml"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR HOMEPAGE"
+    block: | 
+      homepage:
+        image: ghcr.io./gethomepage/homepage:latest
+        container_name: homepage
+        ports:
+          - "3000:3000"
+        volumes:
+          - ./homepage_config:/app/config
+          - /var/run/docker.sock:/var/run/docker.sock:ro
+        restart: unless-stopped
