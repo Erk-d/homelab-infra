@@ -1,0 +1,32 @@
+---
+- name: Add Tailscale GPG key
+  ansible.builtin.get_url:
+    url: https://pkgs.tailscale.com/stable/ubuntu/focal.noarmor.gpg
+    dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+    mode: '0644'
+
+
+- name: Add Tailscale repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyring/tailscal-archive-keyring.gpg] https://pkgs.tailscale.com/stable/ubuntu focal main"
+    filename: tailscale
+    state: present
+
+
+- name: Install Tailscale
+  ansible.builtin.apt:
+    name: tailscale
+    state: latest
+    update_cache: yes
+
+- name: Enable Tailscale service
+  ansible.builtin.systemd:
+    name: tailscaled
+    state: started
+    enabled: yes
+
+- name: Bring Tailscale Up (Authenticate)
+  ansible.builtin.command: "tailscale up --authkey={{ tailscale_auth_key }} --hostname=homelab-server"
+  register: tailscale_start
+  changed_when: "'Success' in tailscale_start.stdout"
+  ignore_errors: yes # Ignores error if already logged in

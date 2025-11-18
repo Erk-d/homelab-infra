@@ -8,5 +8,6 @@
     - portainer
     - vaultwarden
     - homeassistant
+    - tailscale
     - homepage
     
