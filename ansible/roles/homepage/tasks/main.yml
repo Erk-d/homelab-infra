@@ -1,14 +1,55 @@
+---
 - name: Ensure Homepage config directory exists
   ansible.builtin.file:
-    path: "/home/floki/docker/docker/docker-compose.yml"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR HOMEPAGE"
-    block: | 
-      homepage:
-        image: ghcr.io./gethomepage/homepage:latest
-        container_name: homepage
-        ports:
-          - "3000:3000"
-        volumes:
-          - ./homepage_config:/app/config
-          - /var/run/docker.sock:/var/run/docker.sock:ro
-        restart: unless-stopped
+    path: "/home/{{ ansible_user_name }}/app/homepage_config"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
+
+- name: Create Homepage services configuration
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_user_name }}/app/homepage_config/services.yaml"
+    content: |
+      - Infrastructure:
+          - Portainer:
+              icon: portainer.png
+              href: "http://{{ ansible_host }}:9000"
+              description: Docker Management
+          - AdGuard Home:
+              icon: adguard-home.png
+              href: "http://{{ ansible_host }}"
+              description: DNS & Ad Blocking
+
+      - Media & Files:
+          - Plex:
+              icon: plex.png
+              href: "http://{{ ansible_host }}:32400"
+              description: Media Server
+          - Syncthing:
+              icon: syncthing.png
+              href: "http://{{ ansible_host }}:8384"
+              description: File Sync
+
+      - Monitoring & Tools:
+          - Home Assistant:
+              icon: home-assistant.png
+              href: "http://{{ ansible_host }}:8123"
+              description: Home Automation
+          - Vaultwarden:
+              icon: vaultwarden.png
+              href: "http://{{ ansible_host }}:8080"
+              description: Password Manager
+          - Uptime Kuma:
+              icon: uptime-kuma.png
+              href: "http://{{ ansible_host }}:3001"
+              description: Status Monitoring
+
+- name: Create Homepage settings configuration
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_user_name }}/app/homepage_config/settings.yaml"
+    content: |
+      title: Floki's Homelab
+      background:
+        image: https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070
+        opacity: 50

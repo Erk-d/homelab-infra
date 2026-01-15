@@ -1,23 +1,8 @@
 ---
-- name: Ensure Home Assitant config directory exists
+- name: Ensure Home Assistant config directory exists
   ansible.builtin.file:
-    path: "/home/floki/docker/homeassistant_config"
+    path: "/home/{{ ansible_user_name }}/app/homeassistant_config"
     state: directory
-    owner: floki
-    group: floki
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
     mode: '0755'
-
-- name: Add Home Assitant Service to docker-compose
-  ansible.builtin.blockinfile:
-    path: /home/floki/docker/docker/docker-compose.yml
-    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR HOMEASSISTANT"
-    block: |
-      homeassistant:
-        image: ghcr.io/home-assistant/home-assistant:stable
-        container_name: homeassistant
-        network_mode: host
-        volumes:
-          - ./homeassistant_config:/config
-        environment:
-          - TZ=America/Los_Angeles
-        restart: unless-stopped

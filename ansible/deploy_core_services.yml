@@ -2,12 +2,49 @@
 - name: Deploy Core Homelab Services
   hosts: homelab_servers
   become: yes
+  vars:
+    ansible_user_name: floki
+
   roles:
     - nginx_proxy_manager
-    - syncthing
     - portainer
+    - syncthing
     - vaultwarden
     - homeassistant
     - tailscale
     - homepage
+
+  tasks:
+    - name: Ensure app directory exists
+      ansible.builtin.file:
+        path: "/home/{{ ansible_user_name }}/app"
+        state: directory
+        owner: "{{ ansible_user_name }}"
+        group: "{{ ansible_user_name }}"
+        mode: '0755'
+
+    - name: Copy docker-compose file to server
+      ansible.builtin.copy:
+        src: ../docker/docker-compose.yml
+        dest: "/home/{{ ansible_user_name }}/app/docker-compose.yml"
+        owner: "{{ ansible_user_name }}"
+        group: "{{ ansible_user_name }}"
+
+    - name: Copy .env file to server
+      ansible.builtin.copy:
+        src: ../docker/.env
+        dest: "/home/{{ ansible_user_name }}/app/.env"
+        owner: "{{ ansible_user_name }}"
+        group: "{{ ansible_user_name }}"
+        mode: '0600'
+
+    - name: Start services with Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose up -d
+        chdir: "/home/{{ ansible_user_name }}/app"
+      register: compose_output
+
+    - name: Show Docker Compose output
+      ansible.builtin.debug:
+        var: compose_output.stdout_lines
     

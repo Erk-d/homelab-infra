@@ -1,12 +1,39 @@
 ---
-- name: Configure Homelaab Server
+- name: Configure Homelab Server
   hosts: homelab_servers
   become: yes
+  vars:
+    ansible_user_name: floki
+
   tasks:
     - name: Update apt package cache
       ansible.builtin.apt:
         update_cache: yes
         cache_valid_time: 3600 # Update only if cache is older than 1 hour
+
+    - name: Install dependencies for Docker
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - python3-pip
+        state: present
+
+    - name: Install Docker and Docker Compose
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose
+        state: present
+
+    - name: Ensure floki is in the docker group
+      ansible.builtin.user:
+        name: "{{ ansible_user_name }}"
+        groups: docker
+        append: yes
 
     - name: Install essential packages
       ansible.builtin.apt:
@@ -16,12 +43,12 @@
           - mc
         state: present
     
-    - name: Ensure media directorie exist
+    - name: Ensure media directories exist
       ansible.builtin.file:
-        path: "/home/floki/media/{{ item }}"
+        path: "/home/{{ ansible_user_name }}/media/{{ item }}"
         state: directory
-        owner: floki
-        group: floki
+        owner: "{{ ansible_user_name }}"
+        group: "{{ ansible_user_name }}"
         mode: '0755'
       loop:
         - movies

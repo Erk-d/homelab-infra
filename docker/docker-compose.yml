@@ -1,4 +1,16 @@
 services:
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81' # Admin Web Port
+      - '443:443'
+    volumes:
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
+
   adguardhome:
     image: adguard/adguardhome
     container_name: adguardhome
@@ -15,7 +27,7 @@ services:
     volumes:
       - ./homeassistant_config:/config
     environment:
-      - TZ=America/Los_Angeles
+      - TZ=${TIMEZONE}
     restart: unless-stopped
 
   portainer:
@@ -52,10 +64,38 @@ services:
     container_name: plex
     network_mode: host
     environment:
-      - TZ=America/Los_Angeles
-      - claim-6sA7LYGNJ6TKBEr87N1x
+      - TZ=${TIMEZONE}
+      - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
       - ./plex/config:/config
-      - ~/media/tvshows:/data/tvshows
-      - ~/media/movies:/data/movies
+      - ${USER_HOME}/media/tvshows:/data/tvshows
+      - ${USER_HOME}/media/movies:/data/movies
+    restart: unless-stopped
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - "7575:3000"
+    volumes:
+      - ./homepage_config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: unless-stopped
+
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: syncthing
+    hostname: syncthing
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./syncthing_config:/var/syncthing/config
+      - ${USER_HOME}/syncthing_data:/var/syncthing/data
+    ports:
+      - "8384:8384" # Web GUI
+      - "22000:22000/tcp" # TCP pairing
+      - "22000:22000/udp" # UDP pairing
+      - "21027:21027/udp" # Local discovery
     restart: unless-stopped

@@ -1,11 +1,8 @@
 ---
-- name: Create NPM directories
+- name: Ensure Portainer data directory exists
   ansible.builtin.file:
-    path: "/home/{{ ansible_user_name }}/app/npm/{{ item }}"
+    path: "/home/{{ ansible_user_name }}/app/portainer_data"
     state: directory
     owner: "{{ ansible_user_name }}"
     group: "{{ ansible_user_name }}"
     mode: '0755'
-  loop:
-    - data
-    - letsencrypt

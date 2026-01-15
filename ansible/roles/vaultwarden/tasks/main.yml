@@ -1,22 +1,8 @@
 ---
 - name: Ensure Vaultwarden data directory exists
   ansible.builtin.file:
-    path: "/home/floki/docker/vaultwarden_data"
+    path: "/home/{{ ansible_user_name }}/app/vaultwarden_data"
     state: directory
-    owner: floki
-    group: floki
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
     mode: '0755'
-
-- name: Add Vaultwarden service to docker-compose
-  ansible.builtin.blockinfile:
-    path: /home/floki/docker/docker/docker-compose.yml
-    block: |
-      vaultwarden:
-        image: vaultwarden/server:latest
-        container_name: vaultwarden
-        restart: unless-stopped
-        volumes:
-          -./vaultwarden_data:/data
-        ports:
-          -"8080:80"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK VAULTWARDEN"
