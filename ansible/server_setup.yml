@@ -2,14 +2,27 @@
 - name: Configure Homelab Server
   hosts: homelab_servers
   become: yes
-  vars:
-    ansible_user_name: floki
+
 
   tasks:
     - name: Update apt package cache
       ansible.builtin.apt:
         update_cache: yes
         cache_valid_time: 3600 # Update only if cache is older than 1 hour
+
+    - name: Remove old docker packages
+      ansible.builtin.apt:
+        name:
+          - docker
+          - docker-engine
+          - docker.io
+          - containerd
+          - runc
+          - containerd.io
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose-plugin
+        state: absent
 
     - name: Install dependencies for Docker
       ansible.builtin.apt:

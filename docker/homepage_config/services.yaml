@@ -1,0 +1,34 @@
+---
+- Infrastructure:
+    - Portainer:
+        icon: portainer.png
+        href: "http://{{ ansible_host }}:9000"
+        description: Docker Management
+    - AdGuard Home:
+        icon: adguard-home.png
+        href: "http://{{ ansible_host }}"
+        description: DNS & Ad Blocking
+
+- Media & Files:
+    - Plex:
+        icon: plex.png
+        href: "http://{{ ansible_host }}:32400"
+        description: Media Server
+    - Syncthing:
+        icon: syncthing.png
+        href: "http://{{ ansible_host }}:8384"
+        description: File Sync
+
+- Monitoring & Tools:
+    - Home Assistant:
+        icon: home-assistant.png
+        href: "http://{{ ansible_host }}:8123"
+        description: Home Automation
+    - Vaultwarden:
+        icon: vaultwarden.png
+        href: "http://{{ ansible_host }}:8080"
+        description: Password Manager
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: "http://{{ ansible_host }}:3001"
+        description: Status Monitoring

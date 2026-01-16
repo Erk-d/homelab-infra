@@ -2,8 +2,7 @@
 - name: Deploy Core Homelab Services
   hosts: homelab_servers
   become: yes
-  vars:
-    ansible_user_name: floki
+
 
   roles:
     - nginx_proxy_manager
