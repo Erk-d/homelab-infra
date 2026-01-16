@@ -1,0 +1,9 @@
+---
+- name: Fix Homepage Configuration
+  hosts: homelab_servers
+  become: yes
+  tasks:
+    - name: Start services with Shell
+      ansible.builtin.shell:
+        cmd: docker-compose up -d --remove-orphans
+        chdir: "/home/{{ ansible_user_name }}/app"

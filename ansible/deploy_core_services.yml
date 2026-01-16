@@ -37,9 +37,9 @@
         group: "{{ ansible_user_name }}"
         mode: '0600'
 
-    - name: Start services with Docker Compose
-      ansible.builtin.command:
-        cmd: docker-compose up -d
+    - name: Start services with Shell Command
+      ansible.builtin.shell:
+        cmd: docker compose up -d --remove-orphans
         chdir: "/home/{{ ansible_user_name }}/app"
       register: compose_output
 
