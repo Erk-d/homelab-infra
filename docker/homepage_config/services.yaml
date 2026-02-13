@@ -32,6 +32,10 @@
         icon: uptime-kuma.png
         href: "http://192.168.68.75:3001"
         description: Status Monitoring
+    - n8n:
+        icon: n8n.png
+        href: "http://192.168.68.75:5678"
+        description: Workflow Automation
 
 - Documentation:
     - BookStack:

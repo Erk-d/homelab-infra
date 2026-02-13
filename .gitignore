@@ -27,6 +27,7 @@ uptime_kuma_data/
 vaultwarden_data/
 syncthing/
 npm/
+n8n_data/
 # Add any other data folders here in the future
 
 

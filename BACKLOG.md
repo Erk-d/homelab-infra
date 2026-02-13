@@ -13,7 +13,6 @@ Things I want to set up, organized by category. Move items to **Done** when comp
 ## 🟡 Medium Priority
 
 ### Networking & Security
-- [ ] **Tailscale VPN** — Enable remote access to homelab without port forwarding (role exists in Ansible but not deployed)
 - [ ] **Pi-hole or AdGuard DNS setup** — Finish configuring AdGuard Home as the network DNS server
 - [ ] **Fail2Ban** — Add brute-force protection to SSH and exposed services
 
@@ -56,4 +55,5 @@ Things I want to set up, organized by category. Move items to **Done** when comp
 - [x] **Syncthing** — File sync (port 8384)
 - [x] **Home Assistant** — Home automation (port 8123)
 - [x] **AdGuard Home** — DNS & ad blocking (port 80)
-- [x] **Nginx Proxy Manager** — Reverse proxy (port 81)
+- [x] **Tailscale VPN** — Remote access via `100.107.68.20` (installed on server)
+- [x] **n8n** — Workflow automation (port 5678)
