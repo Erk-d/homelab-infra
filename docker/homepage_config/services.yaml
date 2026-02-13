@@ -26,7 +26,7 @@
         description: Home Automation
     - Vaultwarden:
         icon: vaultwarden.png
-        href: "http://192.168.68.75:8080"
+        href: "https://homelab-server.tail2fb333.ts.net:8443"
         description: Password Manager
     - Uptime Kuma:
         icon: uptime-kuma.png

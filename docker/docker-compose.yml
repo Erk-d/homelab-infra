@@ -54,6 +54,8 @@ services:
     image: vaultwarden/server:latest
     container_name: vaultwarden
     restart: unless-stopped
+    environment:
+      - DOMAIN=https://homelab-server.tail2fb333.ts.net:8443
     volumes:
       - ./vaultwarden_data:/data
     ports:
