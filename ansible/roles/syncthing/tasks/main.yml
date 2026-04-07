@@ -1,0 +1,16 @@
+---
+- name: Create Syncthing config directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/syncthing_config"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
+
+- name: Create Syncthing data directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/syncthing_data"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'

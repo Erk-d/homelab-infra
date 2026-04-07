@@ -1,0 +1,17 @@
+services:
+  wyze-bridge:
+    container_name: wyze-bridge
+    image: mrlt8/wyze-bridge:latest
+    restart: unless-stopped
+    ports:
+      - "1935:1935"  # RTMP
+      - "8554:8554"  # RTSP — this is what Frigate will read
+      - "8888:8888"  # HLS
+      - "5000:5000"  # Web UI
+    environment:
+      - WYZE_EMAIL=${WYZE_EMAIL}
+      - WYZE_PASSWORD=${WYZE_PASSWORD}
+      - API_ID=${WYZE_API_ID}
+      - API_KEY=${WYZE_API_KEY}
+      - FILTER_NAMES=${WYZE_FILTER_NAMES}
+      - WB_AUTH=False

@@ -1,0 +1,16 @@
+---
+- name: Create AdGuard work directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/adguard_work"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
+
+- name: Create AdGuard conf directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/adguard_conf"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'

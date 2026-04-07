@@ -3,15 +3,19 @@
   hosts: homelab_servers
   become: yes
 
-
   roles:
     - nginx_proxy_manager
     - portainer
-    - syncthing
+    - adguardhome
+    - uptime_kuma
     - vaultwarden
     - homeassistant
     - tailscale
     - homepage
+    - syncthing
+    - plex
+    - bookstack
+    - n8n
 
   tasks:
     - name: Ensure app directory exists
@@ -46,4 +50,3 @@
     - name: Show Docker Compose output
       ansible.builtin.debug:
         var: compose_output.stdout_lines
-    

@@ -18,16 +18,19 @@ id_ed25519
 # Ignore live data folders for Docker containers.
 # IE Plex library
 
-adguard_conf/
-adguard_work/
-homeassitant_config/ 
-plex/
-portainer_data/
-uptime_kuma_data/
-vaultwarden_data/
-syncthing/
-npm/
-n8n_data/
+# Docker container data directories (server-side, never committed)
+docker/adguard_conf/
+docker/adguard_work/
+docker/homeassistant_config/
+docker/plex/config/
+docker/portainer_data/
+docker/uptime_kuma_data/
+docker/vaultwarden_data/
+docker/syncthing_config/
+docker/npm/
+docker/n8n_data/
+docker/bookstack/db_data/
+docker/bookstack/config/
 # Add any other data folders here in the future
 
 

@@ -1,0 +1,8 @@
+---
+- name: Create Uptime Kuma data directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/uptime_kuma_data"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'

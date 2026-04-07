@@ -1,0 +1,37 @@
+---
+# Wyze Bridge is deployed as a separate stack in ~/wyze-yolo/
+# Credentials are stored in ~/wyze-yolo/.env (not in git)
+
+- name: Create wyze-yolo directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/wyze-yolo"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
+
+- name: Copy wyze-bridge compose file
+  ansible.builtin.copy:
+    src: ../../../../docker/wyze-bridge/docker-compose.yml
+    dest: "/home/{{ ansible_user_name }}/wyze-yolo/docker-compose.yml"
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+
+- name: Check if wyze .env exists
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user_name }}/wyze-yolo/.env"
+  register: wyze_env
+
+- name: Warn if wyze .env is missing
+  ansible.builtin.debug:
+    msg: >
+      WARNING: /home/{{ ansible_user_name }}/wyze-yolo/.env not found.
+      Copy docker/wyze-bridge/.env.example to the server as ~/wyze-yolo/.env
+      and fill in your Wyze credentials before starting this service.
+  when: not wyze_env.stat.exists
+
+- name: Start wyze-bridge (if .env exists)
+  ansible.builtin.shell:
+    cmd: docker compose up -d --remove-orphans
+    chdir: "/home/{{ ansible_user_name }}/wyze-yolo"
+  when: wyze_env.stat.exists

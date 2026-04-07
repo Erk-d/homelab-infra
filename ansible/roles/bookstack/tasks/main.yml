@@ -1,0 +1,16 @@
+---
+- name: Create BookStack config directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/bookstack/config"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
+
+- name: Create BookStack database directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/bookstack/db_data"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0755'
