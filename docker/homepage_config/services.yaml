@@ -4,41 +4,72 @@
         icon: portainer.png
         href: "http://192.168.68.75:9000"
         description: Docker Management
+        widget:
+          type: portainer
+          url: http://portainer:9000
+          env: 1
+          key: "{{HOMEPAGE_VAR_PORTAINER_KEY}}"
+
     - AdGuard Home:
         icon: adguard-home.png
-        href: "http://192.168.68.75"
+        href: "http://192.168.68.75:3000"
         description: DNS & Ad Blocking
+        widget:
+          type: adguard
+          url: http://adguardhome
+          username: "{{HOMEPAGE_VAR_ADGUARD_USER}}"
+          password: "{{HOMEPAGE_VAR_ADGUARD_PASS}}"
+
+    - Nginx Proxy Manager:
+        icon: nginx-proxy-manager.png
+        href: "http://192.168.68.75:81"
+        description: Reverse Proxy
+
+- Monitoring:
+    - Grafana:
+        icon: grafana.png
+        href: "http://192.168.68.75:3030"
+        description: Metrics & Dashboards
+
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: "http://192.168.68.75:3001"
+        description: Service Uptime
+
+    - Prometheus:
+        icon: prometheus.png
+        href: "http://192.168.68.75:9090"
+        description: Metrics Collector
 
 - Media & Files:
     - Plex:
         icon: plex.png
         href: "http://192.168.68.75:32400/web"
         description: Media Server
+
     - Syncthing:
         icon: syncthing.png
         href: "http://192.168.68.75:8384"
         description: File Sync
 
-- Monitoring & Tools:
+- Home & Automation:
     - Home Assistant:
         icon: home-assistant.png
         href: "http://192.168.68.75:8123"
         description: Home Automation
-    - Vaultwarden:
-        icon: vaultwarden.png
-        href: "https://homelab-server.tail2fb333.ts.net:8443"
-        description: Password Manager
-    - Uptime Kuma:
-        icon: uptime-kuma.png
-        href: "http://192.168.68.75:3001"
-        description: Status Monitoring
+
     - n8n:
         icon: n8n.png
         href: "http://192.168.68.75:5678"
         description: Workflow Automation
 
-- Documentation:
+- Tools:
+    - Vaultwarden:
+        icon: vaultwarden.png
+        href: "https://homelab-server.tail2fb333.ts.net:8443"
+        description: Password Manager
+
     - BookStack:
         icon: bookstack.png
         href: "http://192.168.68.75:6875"
-        description: Wiki & Documentation
+        description: Wiki & Docs

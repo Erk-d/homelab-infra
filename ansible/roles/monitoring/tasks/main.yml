@@ -1,0 +1,24 @@
+---
+- name: Create Prometheus data directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/prometheus/data"
+    state: directory
+    owner: "65534"  # nobody — Prometheus runs as this user
+    group: "65534"
+    mode: '0755'
+
+- name: Copy Prometheus config
+  ansible.builtin.copy:
+    src: ../../../../docker/prometheus/prometheus.yml
+    dest: "/home/{{ ansible_user_name }}/app/prometheus/prometheus.yml"
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
+    mode: '0644'
+
+- name: Create Grafana data directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/grafana/data"
+    state: directory
+    owner: "472"  # grafana user inside container
+    group: "472"
+    mode: '0755'

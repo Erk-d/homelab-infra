@@ -16,6 +16,7 @@
     - plex
     - bookstack
     - n8n
+    - monitoring
 
   tasks:
     - name: Ensure app directory exists
