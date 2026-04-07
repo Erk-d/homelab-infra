@@ -17,7 +17,7 @@ services:
     ports:
       - "53:53/tcp"   # DNS
       - "53:53/udp"   # DNS
-      - "3000:3000"   # Setup wizard / Admin UI (after setup, configure admin to stay on 3000)
+      - "3000:80"     # Admin UI (AdGuard listens on internal port 80)
     volumes:
       - ./adguard_work:/opt/adguardhome/work
       - ./adguard_conf:/opt/adguardhome/conf
