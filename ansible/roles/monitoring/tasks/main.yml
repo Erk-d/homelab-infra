@@ -3,8 +3,16 @@
   ansible.builtin.file:
     path: "/home/{{ ansible_user_name }}/app/prometheus/data"
     state: directory
-    owner: "65534"  # nobody — Prometheus runs as this user
+    owner: "65534"  # nobody — Prometheus runs as UID 65534
     group: "65534"
+    mode: '0755'
+
+- name: Create Prometheus config directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user_name }}/app/prometheus"
+    state: directory
+    owner: "{{ ansible_user_name }}"
+    group: "{{ ansible_user_name }}"
     mode: '0755'
 
 - name: Copy Prometheus config
