@@ -215,3 +215,16 @@ services:
       - /dev/disk/:/dev/disk:ro
     devices:
       - /dev/kmsg
+
+  # ── Game Servers ──────────────────────────────────────────────
+  factorio:
+    image: factoriotools/factorio:stable
+    container_name: factorio
+    restart: unless-stopped
+    ports:
+      - "34197:34197/udp"
+    environment:
+      - USERNAME=${FACTORIO_USERNAME}
+      - TOKEN=${FACTORIO_TOKEN}
+    volumes:
+      - ./factorio:/factorio
