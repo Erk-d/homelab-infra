@@ -226,5 +226,18 @@ services:
     environment:
       - USERNAME=${FACTORIO_USERNAME}
       - TOKEN=${FACTORIO_TOKEN}
+      - RCON_PASSWORD=${FACTORIO_RCON_PASSWORD}
     volumes:
       - ./factorio:/factorio
+
+  factorio-exporter:
+    build: ./factorio-exporter
+    container_name: factorio-exporter
+    restart: unless-stopped
+    environment:
+      - RCON_HOST=factorio
+      - RCON_PORT=27015
+      - RCON_PASSWORD=${FACTORIO_RCON_PASSWORD}
+      - SCRAPE_INTERVAL=15
+    depends_on:
+      - factorio

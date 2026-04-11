@@ -15,6 +15,10 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
 
+  - job_name: 'factorio'
+    static_configs:
+      - targets: ['factorio-exporter:9200']
+
   # Uncomment once Pi is added to Tailscale/LAN
   # - job_name: 'pi'
   #   static_configs:
