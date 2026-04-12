@@ -220,7 +220,7 @@ services:
 
   # ── Game Servers ──────────────────────────────────────────────
   factorio:
-    image: factoriotools/factorio:1.1
+    image: factoriotools/factorio:stable
     container_name: factorio
     restart: unless-stopped
     ports:
